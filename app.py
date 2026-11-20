@@ -1174,14 +1174,27 @@ def find_free_port(start_port=5000):
     return start_port
 
 def run_server(port=5000, open_browser=True):
+    env_port = os.environ.get("PORT")
+    if env_port:
+        try:
+            port = int(env_port)
+        except ValueError:
+            pass
     port = find_free_port(port)
     url = f"http://localhost:{port}"
     print("\n" + "=" * 65)
     print(f"DASHBOARD WEB AKTIF DI: {url}")
-    print(f"Membuka browser otomatis ke localhost...")
+    print(f"Catatan Google Cloud Console / Cloud Shell:")
+    print(f"  Gunakan tombol 'Web Preview' (Pratinjau Web) di kanan atas")
+    print(f"  terminal Cloud Shell dan pilih 'Preview on port {port}'.")
     print("=" * 65 + "\n")
     if open_browser:
-        threading.Timer(1.2, lambda: webbrowser.open(url)).start()
+        def _safe_open():
+            try:
+                webbrowser.open(url)
+            except Exception:
+                pass
+        threading.Timer(1.2, _safe_open).start()
     app.run(host="0.0.0.0", port=port, debug=False)
 
 if __name__ == "__main__":
