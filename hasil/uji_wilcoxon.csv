@@ -1,0 +1,2 @@
+statistik_W,p_value,kesimpulan
+777.0,1.1104656391841977e-09,"Perbedaan GRU-Adam vs LSTM-Adam SIGNIFIKAN secara statistik (W=777.00, p=0.0000 < 0.05)."
